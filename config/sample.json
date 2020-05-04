@@ -1,0 +1,7 @@
+{
+    "interface" : "eth0",
+    "database" : "db.sqlite",
+    "modules" : [
+        
+    ]
+}
