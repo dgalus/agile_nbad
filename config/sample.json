@@ -2,6 +2,16 @@
     "interface" : "eth0",
     "database" : "db.sqlite",
     "modules" : [
-        
+        { "name" : "counters", "args" : {} },
+        { "name" : "new_host", "args" : {} },
+        { "name" : "host_up", "args" : {} },
+        { "name" : "geolocation", "args" : {} },
+        { "name" : "geolocation_statistics", "args" : {} },
+        { "name" : "port_scan", "args" : {} },
+        { "name" : "unsafe_domain", "args" : {} },
+        { "name" : "unsafe_ip", "args" : {} }
+    ],
+    "outputs" : [
+        { "name" : "slack", "args" : {} }
     ]
 }

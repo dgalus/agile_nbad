@@ -6,6 +6,7 @@
 class Sniffer {
     public:
         Sniffer(const std::string interface);
+        void sniff();
 
     private:
         std::string interface;

@@ -1,3 +1,5 @@
+#include <fstream>
+
 #include "../libs/rapidjson/rapidjson.h"
 
 
