@@ -1,9 +1,8 @@
-#ifndef STRUCTURES_HPP_
-#define STRUCTURES_HPP_
+#ifndef STRUCTURES_H_
+#define STRUCTURES_H_
 
 #include <string>
 #include <vector>
-
 #include <cstdint>
 
 

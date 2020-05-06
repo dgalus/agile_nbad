@@ -1,5 +1,5 @@
-#ifndef IP_ADDRESS_HPP_
-#define IP_ADDRESS_HPP_
+#ifndef IP_ADDRESS_H_
+#define IP_ADDRESS_H_
 
 #include <cstdint>
 #include <iostream>
