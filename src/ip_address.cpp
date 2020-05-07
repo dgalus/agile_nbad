@@ -1,4 +1,4 @@
-#include "ip_address.hpp"
+#include "ip_address.h"
 
 IpAddress::IpAddress()
 {
