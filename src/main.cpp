@@ -7,13 +7,12 @@
 
 void getConfig(char* path, rapidjson::Document& config)
 {
-    std::ifstream c(path);
+    std::ifstream c{path};
     std::stringstream buffer;
     buffer << c.rdbuf();
     std::string _c = buffer.str();
     config.Parse(_c.c_str());
 }
-
 
 int main(int argc, char* argv[])
 {
