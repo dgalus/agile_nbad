@@ -2,6 +2,7 @@
 #define SNIFFER_H_
 
 #include <functional>
+#include <memory>
 #include <string>
 
 #include <arpa/inet.h>
@@ -26,7 +27,7 @@
 
 class Sniffer {
     public:
-        Sniffer(const std::string interface, Counters* counters);
+        Sniffer(const std::string interface, std::shared_ptr<Counters> counters);
         virtual ~Sniffer();
         void setEthernetCallback(std::function<void()> func);
         void setArpCallback(std::function<void()> func);
@@ -40,7 +41,7 @@ class Sniffer {
         uint8_t* blank;
 
         std::string interface;
-        Counters* counters;
+        std::shared_ptr<Counters> counters;
 
         std::function<void()> ethCallback;
         std::function<void()> arpCallback;

@@ -1,6 +1,6 @@
 #include "sniffer.h"
 
-Sniffer::Sniffer(const std::string interface, Counters* counters)
+Sniffer::Sniffer(const std::string interface, std::shared_ptr<Counters> counters)
 {
     this->interface = interface;
     this->counters = counters;

@@ -30,7 +30,7 @@ public:
     uint64_t l3_frames;
     uint64_t l4_frames;
 
-    std::mutex counterMutex;
+    std::mutex countersMutex;
 };
 
 #endif
