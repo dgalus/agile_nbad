@@ -12,18 +12,22 @@
 #include <linux/icmp.h>
 #include <net/if.h>
 #include <netinet/ether.h>
-#include <string.h>
+#include <stdint.h>
 #include <stdlib.h>
+#include <string.h>
 #include <sys/ioctl.h>
 #include <sys/socket.h>
 #include <time.h>
 #include <unistd.h>
 
+#include "counters.h"
+
 #define BUFSIZE 65536
 
 class Sniffer {
     public:
-        Sniffer(const std::string interface);
+        Sniffer(const std::string interface, Counters* counters);
+        virtual ~Sniffer();
         void setEthernetCallback(std::function<void()> func);
         void setArpCallback(std::function<void()> func);
         void setTcpCallback(std::function<void()> func);
@@ -33,8 +37,10 @@ class Sniffer {
 
     private:
         void m_processFrame(char* buffer, int buflen);
+        uint8_t* blank;
 
         std::string interface;
+        Counters* counters;
 
         std::function<void()> ethCallback;
         std::function<void()> arpCallback;

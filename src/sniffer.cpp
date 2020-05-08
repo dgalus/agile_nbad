@@ -1,8 +1,17 @@
 #include "sniffer.h"
 
-Sniffer::Sniffer(const std::string interface)
+Sniffer::Sniffer(const std::string interface, Counters* counters)
 {
     this->interface = interface;
+    this->counters = counters;
+
+    this->blank = (uint8_t *) malloc(6);
+    memset(blank, 0, 6);
+}
+
+Sniffer::~Sniffer()
+{
+    free(this->blank);
 }
 
 void Sniffer::sniff()
@@ -64,11 +73,14 @@ void Sniffer::sniff()
         }
         this->m_processFrame(buffer, buflen);
     }
-    
+
     free(buffer);
 }
 
 void Sniffer::m_processFrame(char* buffer, int buflen)
 {
-
+    struct ethhdr *eth = (struct ethhdr *)(buffer);
+    if((!memcmp(this->blank, eth->h_source, 6)) && (!memcmp(this->blank, eth->h_dest, 6)))
+        return;
+    
 }

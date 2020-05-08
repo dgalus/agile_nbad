@@ -4,6 +4,9 @@
 #include <sstream>
 #include <thread>
 
+#include "counters.h"
+#include "sniffer.h"
+
 #include "../libs/rapidjson/rapidjson.h"
 #include "../libs/rapidjson/document.h"
 
@@ -30,7 +33,8 @@ int main(int argc, char* argv[])
     rapidjson::Document config;
     getConfig(argv[1], config);
 
-    std::cout << config["interface"].GetString() << std::endl;
+    std::shared_ptr<Counters> c = std::make_shared<Counters>();
+    Sniffer s{config["interface"].GetString(), c};
 
     return 0;
 }
