@@ -1,5 +1,5 @@
 all:
-	g++ *.cpp -o ../bin/sniffer -lpthread -ldl -std=c++17
+	g++ *.cpp -o ../bin/sniffer -lpthread -lsqlite3 -ldl -std=c++17
 	../bin/sniffer ../config/sample.json
 
 install:
