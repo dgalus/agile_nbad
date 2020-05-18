@@ -3,7 +3,8 @@
 
 class IDatabase
 {
-
+public:
+    virtual void createDbSchemaIfNotExists() = 0;
 };
 
 #endif
