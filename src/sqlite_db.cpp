@@ -25,24 +25,24 @@ void SqliteDb::createDbSchemaIfNotExists()
 void SqliteDb::createCountersTable()
 {
     std::string query = "CREATE TABLE counters ("
-        "id INTEGER PRIMARY KEY,"
-        "timestamp DATETIME NOT NULL UNIQUE,"
-        "l2_traffic BIGINT NOT NULL,"
-        "l2_frames BIGINT NOT NULL,"
-        "l3_traffic BIGINT NOT NULL,"
-        "l3_frames BIGINT NOT NULL,"
-        "l4_traffic BIGINT NOT NULL,"
-        "l4_frames BIGINT NOT NULL,"
-        "ip_frames BIGINT NOT NULL,"
-        "arp_frames BIGINT NOT NULL,"
-        "icmp_frames BIGINT NOT NULL,"
-        "udp_frames BIGINT NOT NULL,"
-        "tcp_frames BIGINT NOT NULL,"
-        "tcp_syn BIGINT NOT NULL,"
-        "tcp_ack BIGINT NOT NULL,"
-        "tcp_synack BIGINT NOT NULL,"
-        "tcp_psh BIGINT NOT NULL,"
-        "tcp_rst BIGINT NOT NULL,"
+        "id INTEGER PRIMARY KEY, "
+        "timestamp DATETIME NOT NULL UNIQUE, "
+        "l2_traffic BIGINT NOT NULL, "
+        "l2_frames BIGINT NOT NULL, "
+        "l3_traffic BIGINT NOT NULL, "
+        "l3_frames BIGINT NOT NULL, "
+        "l4_traffic BIGINT NOT NULL, "
+        "l4_frames BIGINT NOT NULL, "
+        "ip_frames BIGINT NOT NULL, "
+        "arp_frames BIGINT NOT NULL, "
+        "icmp_frames BIGINT NOT NULL, "
+        "udp_frames BIGINT NOT NULL, "
+        "tcp_frames BIGINT NOT NULL, "
+        "tcp_syn BIGINT NOT NULL, "
+        "tcp_ack BIGINT NOT NULL, "
+        "tcp_synack BIGINT NOT NULL, "
+        "tcp_psh BIGINT NOT NULL, "
+        "tcp_rst BIGINT NOT NULL, "
         "tcp_fin BIGINT NOT NULL"
         ");";
     rc = sqlite3_exec(db, query.c_str(), NULL, 0, &zErrMsg);
@@ -53,15 +53,33 @@ void SqliteDb::createCountersTable()
 
 void SqliteDb::createSuspectedIpAddressesTable()
 {
-
+    std::string query = "CREATE TABLE suspected_ip_address ("
+        "ip INTEGER PRIMARY KEY, "
+        "ip VARCHAR(15) NOT NULL UNIQUE);";
+    rc = sqlite3_exec(db, query.c_str(), NULL, 0, &zErrMsg);
+    if(rc != SQLITE_OK) {
+        fprintf(stderr, "SQL error: %s\n", zErrMsg);
+    }
 }
 
 void SqliteDb::createSuspectedDomainsTable()
 {
-
+    std::string query = "CREATE TABLE suspected_domain ("
+        "ip INTEGER PRIMARY KEY, "
+        "domain VARCHAR(250) NOT NULL UNIQUE);";
+    rc = sqlite3_exec(db, query.c_str(), NULL, 0, &zErrMsg);
+    if(rc != SQLITE_OK) {
+        fprintf(stderr, "SQL error: %s\n", zErrMsg);
+    }
 }
 
 void SqliteDb::createSuspectedUrlsTable()
 {
-
+    std::string query = "CREATE TABLE suspected_url ("
+        "ip INTEGER PRIMARY KEY, "
+        "url VARCHAR(1000) NOT NULL UNIQUE);";
+    rc = sqlite3_exec(db, query.c_str(), NULL, 0, &zErrMsg);
+    if(rc != SQLITE_OK) {
+        fprintf(stderr, "SQL error: %s\n", zErrMsg);
+    }
 }

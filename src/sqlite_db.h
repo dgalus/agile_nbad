@@ -2,8 +2,7 @@
 #define SQLITE_DB_H_
 
 #include <string>
-
-#include <stdlib.h>
+#include <cstdlib>
 #include <sqlite3.h>
 
 #include "idatabase.h"
