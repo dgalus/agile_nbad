@@ -1,6 +1,7 @@
 #ifndef SQLITE_DB_H_
 #define SQLITE_DB_H_
 
+#include <algorithm>
 #include <cstdlib>
 #include <memory>
 #include <string>
@@ -17,6 +18,9 @@ public:
     ~SqliteDb();
     void createDbSchemaIfNotExists() override;
     void insertCounters(std::shared_ptr<Counters> counters) override;
+    void insertSuspectedDomains(std::vector<std::string> suspectedDomains) override;
+    void insertSuspectedIpAddresses(std::vector<std::string> suspectedIpAddresses) override;
+    void insertSuspectedUrls(std::vector<std::string> suspectedUrls) override;
     std::vector<std::string> getSuspectedDomains() override;
     std::vector<std::string> getSuspectedIpAddresses() override;
     std::vector<std::string> getSuspectedUrls() override;

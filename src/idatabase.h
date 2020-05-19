@@ -14,6 +14,9 @@ public:
     virtual std::vector<std::string> getSuspectedIpAddresses() = 0;
     virtual std::vector<std::string> getSuspectedUrls() = 0;
     virtual void insertCounters(std::shared_ptr<Counters> counters) = 0;
+    virtual void insertSuspectedDomains(std::vector<std::string> suspectedDomains) = 0;
+    virtual void insertSuspectedIpAddresses(std::vector<std::string> suspectedIpAddresses) = 0;
+    virtual void insertSuspectedUrls(std::vector<std::string> suspectedUrls) = 0;
 };
 
 #endif

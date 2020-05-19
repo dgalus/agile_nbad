@@ -45,10 +45,40 @@ void SqliteDb::insertCounters(std::shared_ptr<Counters> counters)
 
 }
 
+void SqliteDb::insertSuspectedDomains(std::vector<std::string> suspectedDomains)
+{
+    sqlite3_exec(db, "BEGIN TRANSACTION", NULL, NULL, NULL);
+    std::for_each(suspectedDomains.begin(), suspectedDomains.end(), [&](const std::string& domain){
+        std::string query = "INSERT INTO suspected_domain (domain) VALUES (" + domain + ");";
+        sqlite3_exec(db, query.c_str(), NULL, NULL, NULL);
+    });
+    sqlite3_exec(db, "COMMIT TRANSACTION", NULL, NULL, NULL);
+}
+
+void SqliteDb::insertSuspectedIpAddresses(std::vector<std::string> suspectedIpAddresses)
+{
+    sqlite3_exec(db, "BEGIN TRANSACTION", NULL, NULL, NULL);
+    std::for_each(suspectedIpAddresses.begin(), suspectedIpAddresses.end(), [&](const std::string& ip){
+        std::string query = "INSERT INTO suspected_ip_address (domain) VALUES (" + ip + ");";
+        sqlite3_exec(db, query.c_str(), NULL, NULL, NULL);
+    });
+    sqlite3_exec(db, "COMMIT TRANSACTION", NULL, NULL, NULL);
+}
+
+void SqliteDb::insertSuspectedUrls(std::vector<std::string> suspectedUrls)
+{
+    sqlite3_exec(db, "BEGIN TRANSACTION", NULL, NULL, NULL);
+    std::for_each(suspectedUrls.begin(), suspectedUrls.end(), [&](const std::string& url){
+        std::string query = "INSERT INTO suspected_url (domain) VALUES (" + url + ");";
+        sqlite3_exec(db, query.c_str(), NULL, NULL, NULL);
+    });
+    sqlite3_exec(db, "COMMIT TRANSACTION", NULL, NULL, NULL);
+}
+
 void SqliteDb::createCountersTable()
 {
     std::string query = "CREATE TABLE counters ("
-        "id INTEGER PRIMARY KEY, "
+        "id INTEGER PRIMARY KEY AUTOINCREMENT, "
         "timestamp DATETIME NOT NULL UNIQUE, "
         "l2_traffic BIGINT NOT NULL, "
         "l2_frames BIGINT NOT NULL, "
@@ -77,7 +107,7 @@ void SqliteDb::createCountersTable()
 void SqliteDb::createSuspectedIpAddressesTable()
 {
     std::string query = "CREATE TABLE suspected_ip_address ("
-        "id INTEGER PRIMARY KEY, "
+        "id INTEGER PRIMARY KEY AUTOINCREMENT, "
         "ip VARCHAR(15) NOT NULL UNIQUE);";
     rc = sqlite3_exec(db, query.c_str(), NULL, 0, &zErrMsg);
     if(rc != SQLITE_OK) {
@@ -88,7 +118,7 @@ void SqliteDb::createSuspectedIpAddressesTable()
 void SqliteDb::createSuspectedDomainsTable()
 {
     std::string query = "CREATE TABLE suspected_domain ("
-        "id INTEGER PRIMARY KEY, "
+        "id INTEGER PRIMARY KEY AUTOINCREMENT, "
         "domain VARCHAR(250) NOT NULL UNIQUE);";
     rc = sqlite3_exec(db, query.c_str(), NULL, 0, &zErrMsg);
     if(rc != SQLITE_OK) {
@@ -99,7 +129,7 @@ void SqliteDb::createSuspectedDomainsTable()
 void SqliteDb::createSuspectedUrlsTable()
 {
     std::string query = "CREATE TABLE suspected_url ("
-        "id INTEGER PRIMARY KEY, "
+        "id INTEGER PRIMARY KEY AUTOINCREMENT, "
         "url VARCHAR(1000) NOT NULL UNIQUE);";
     rc = sqlite3_exec(db, query.c_str(), NULL, 0, &zErrMsg);
     if(rc != SQLITE_OK) {
