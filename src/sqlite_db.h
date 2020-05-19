@@ -15,11 +15,11 @@ class SqliteDb : public IDatabase
 public:
     SqliteDb(std::string path);
     ~SqliteDb();
-    virtual void createDbSchemaIfNotExists() override;
-    virtual std::vector<std::string> getSuspectedDomains() override;
-    virtual std::vector<std::string> getSuspectedIpAddresses() override;
-    virtual std::vector<std::string> getSuspectedUrls() override;
-    virtual void insertCounters(std::shared_ptr<Counters> counters) override;
+    void createDbSchemaIfNotExists() override;
+    void insertCounters(std::shared_ptr<Counters> counters) override;
+    std::vector<std::string> getSuspectedDomains() override;
+    std::vector<std::string> getSuspectedIpAddresses() override;
+    std::vector<std::string> getSuspectedUrls() override;
 
 private:
     inline void createCountersTable();
