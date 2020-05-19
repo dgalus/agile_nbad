@@ -6,10 +6,10 @@
 class DbCache
 {
 public:
-    DbCache(IDatabase db);
+    DbCache(IDatabase* db);
 
 private:
-    IDatabase db;
+    IDatabase* db;
 };
 
 #endif

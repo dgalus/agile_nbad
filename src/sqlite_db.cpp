@@ -22,6 +22,29 @@ void SqliteDb::createDbSchemaIfNotExists()
     createSuspectedUrlsTable();
 }
 
+std::vector<std::string> SqliteDb::getSuspectedDomains()
+{
+    std::vector<std::string> ret;
+    return ret;
+}
+
+std::vector<std::string> SqliteDb::getSuspectedIpAddresses()
+{
+    std::vector<std::string> ret;
+    return ret;
+}
+
+std::vector<std::string> SqliteDb::getSuspectedUrls()
+{
+    std::vector<std::string> ret;
+    return ret;
+}
+
+void SqliteDb::insertCounters(std::shared_ptr<Counters> counters)
+{
+
+}
+
 void SqliteDb::createCountersTable()
 {
     std::string query = "CREATE TABLE counters ("
@@ -54,7 +77,7 @@ void SqliteDb::createCountersTable()
 void SqliteDb::createSuspectedIpAddressesTable()
 {
     std::string query = "CREATE TABLE suspected_ip_address ("
-        "ip INTEGER PRIMARY KEY, "
+        "id INTEGER PRIMARY KEY, "
         "ip VARCHAR(15) NOT NULL UNIQUE);";
     rc = sqlite3_exec(db, query.c_str(), NULL, 0, &zErrMsg);
     if(rc != SQLITE_OK) {
@@ -65,7 +88,7 @@ void SqliteDb::createSuspectedIpAddressesTable()
 void SqliteDb::createSuspectedDomainsTable()
 {
     std::string query = "CREATE TABLE suspected_domain ("
-        "ip INTEGER PRIMARY KEY, "
+        "id INTEGER PRIMARY KEY, "
         "domain VARCHAR(250) NOT NULL UNIQUE);";
     rc = sqlite3_exec(db, query.c_str(), NULL, 0, &zErrMsg);
     if(rc != SQLITE_OK) {
@@ -76,7 +99,7 @@ void SqliteDb::createSuspectedDomainsTable()
 void SqliteDb::createSuspectedUrlsTable()
 {
     std::string query = "CREATE TABLE suspected_url ("
-        "ip INTEGER PRIMARY KEY, "
+        "id INTEGER PRIMARY KEY, "
         "url VARCHAR(1000) NOT NULL UNIQUE);";
     rc = sqlite3_exec(db, query.c_str(), NULL, 0, &zErrMsg);
     if(rc != SQLITE_OK) {
