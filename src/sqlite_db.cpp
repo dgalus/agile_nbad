@@ -24,20 +24,89 @@ void SqliteDb::createDbSchemaIfNotExists()
 
 std::vector<std::string> SqliteDb::getSuspectedDomains()
 {
-    std::vector<std::string> ret;
-    return ret;
+    sqlite3_stmt *stmt;
+    std::string query = "SELECT domain FROM suspected_domain;";
+    rc = sqlite3_prepare(db, query.c_str(), 0, &stmt, 0);
+    if(rc != SQLITE_OK) {
+        return std::vector<std::string>{};
+    } else {
+        std::vector<std::string> ret;
+        while((rc = sqlite3_step(stmt)) != SQLITE_DONE)
+        {
+            switch(rc)
+            {
+                case SQLITE_BUSY:
+                    usleep(300);
+                    break;
+                case SQLITE_ERROR:
+                    break;
+                case SQLITE_ROW:
+                    int n = sqlite3_column_count(stmt);
+                    for(int i=0; i<n; i++)
+                        ret.push_back(std::string(reinterpret_cast<const char*>(sqlite3_column_text(stmt, i))));
+            }
+        }
+        sqlite3_finalize(stmt);
+        return ret;
+    }
 }
 
 std::vector<std::string> SqliteDb::getSuspectedIpAddresses()
 {
-    std::vector<std::string> ret;
-    return ret;
+    sqlite3_stmt *stmt;
+    std::string query = "SELECT ip FROM suspected_ip_address;";
+    rc = sqlite3_prepare(db, query.c_str(), 0, &stmt, 0);
+    if(rc != SQLITE_OK) {
+        return std::vector<std::string>{};
+    } else {
+        std::vector<std::string> ret;
+        while((rc = sqlite3_step(stmt)) != SQLITE_DONE)
+        {
+            switch(rc)
+            {
+                case SQLITE_BUSY:
+                    usleep(300);
+                    break;
+                case SQLITE_ERROR:
+                    break;
+                case SQLITE_ROW:
+                    int n = sqlite3_column_count(stmt);
+                    for(int i=0; i<n; i++)
+                        ret.push_back(std::string(reinterpret_cast<const char*>(sqlite3_column_text(stmt, i))));
+            }
+        }
+        sqlite3_finalize(stmt);
+        return ret;
+    }
 }
 
 std::vector<std::string> SqliteDb::getSuspectedUrls()
 {
-    std::vector<std::string> ret;
-    return ret;
+    sqlite3_stmt *stmt;
+    std::string query = "SELECT url FROM suspected_url;";
+    rc = sqlite3_prepare(db, query.c_str(), 0, &stmt, 0);
+    if(rc != SQLITE_OK) {
+        return std::vector<std::string>{};
+    } else {
+        std::vector<std::string> ret;
+        while((rc = sqlite3_step(stmt)) != SQLITE_DONE)
+        {
+            switch(rc)
+            {
+                case SQLITE_BUSY:
+                    usleep(300);
+                    break;
+                case SQLITE_ERROR:
+                    break;
+                case SQLITE_ROW:
+                    int n = sqlite3_column_count(stmt);
+                    for(int i=0; i<n; i++)
+                        ret.push_back(std::string(reinterpret_cast<const char*>(sqlite3_column_text(stmt, i))));
+            }
+        }
+        sqlite3_finalize(stmt);
+        return ret;
+    }
 }
 
 void SqliteDb::insertCounters(std::shared_ptr<Counters> counters)

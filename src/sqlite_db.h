@@ -7,6 +7,7 @@
 #include <string>
 #include <vector>
 #include <sqlite3.h>
+#include <unistd.h>
 
 #include "counters.h"
 #include "idatabase.h"
