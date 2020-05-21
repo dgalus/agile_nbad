@@ -9,6 +9,7 @@ class Counters
 public:
     Counters();
     void zeroize();
+    std::string stringifyForDb();
 
     uint64_t tcp_syn;
     uint64_t tcp_ack;
@@ -17,11 +18,11 @@ public:
     uint64_t tcp_rst;
     uint64_t tcp_fin;
 
-    uint64_t tcp;
-    uint64_t ip;
-    uint64_t arp;
-    uint64_t udp;
-    uint64_t icmp;
+    uint64_t tcp_frames;
+    uint64_t ip_frames;
+    uint64_t arp_frames;
+    uint64_t udp_frames;
+    uint64_t icmp_frames;
 
     uint64_t l2_traffic;
     uint64_t l3_traffic;

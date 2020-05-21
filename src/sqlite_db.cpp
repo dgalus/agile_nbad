@@ -111,7 +111,22 @@ std::vector<std::string> SqliteDb::getSuspectedUrls()
 
 void SqliteDb::insertCounters(std::shared_ptr<Counters> counters)
 {
+    std::string timestamp = getCurrentDatetime("%Y-%m-%d %X");
+    counters->countersMutex.lock();
+    std::string query = "INSERT INTO counters ("
+        "timestamp, l2_traffic, l2_frames, l3_traffic, l3_frames, "
+        "l4_traffic, l4_frames, ip_frames, arp_frames, icmp_frames, "
+        "udp_frames, tcp_frames, tcp_syn, tcp_ack, tcp_synack, tcp_psh, "
+        "tcp_rst, tcp_fin) VALUES (" + timestamp + ""
+        "" + counters->stringifyForDb() + ""
+        ")";
 
+    rc = sqlite3_exec(db, query.c_str(), NULL, 0, &zErrMsg);
+    if(rc != SQLITE_OK) {
+        fprintf(stderr, "SQL error: %s\n", zErrMsg);
+    }
+    counters->zeroize();
+    counters->countersMutex.unlock();
 }
 
 void SqliteDb::insertSuspectedDomains(std::vector<std::string> suspectedDomains)
@@ -121,7 +136,10 @@ void SqliteDb::insertSuspectedDomains(std::vector<std::string> suspectedDomains)
         std::string query = "INSERT INTO suspected_domain (domain) VALUES (" + domain + ");";
         sqlite3_exec(db, query.c_str(), NULL, NULL, NULL);
     });
-    sqlite3_exec(db, "COMMIT TRANSACTION", NULL, NULL, NULL);
+    sqlite3_exec(db, "COMMIT TRANSACTION", NULL, 0, &zErrMsg);
+    if(rc != SQLITE_OK) {
+        fprintf(stderr, "SQL error: %s\n", zErrMsg);
+    }
 }
 
 void SqliteDb::insertSuspectedIpAddresses(std::vector<std::string> suspectedIpAddresses)
@@ -131,7 +149,10 @@ void SqliteDb::insertSuspectedIpAddresses(std::vector<std::string> suspectedIpAd
         std::string query = "INSERT INTO suspected_ip_address (domain) VALUES (" + ip + ");";
         sqlite3_exec(db, query.c_str(), NULL, NULL, NULL);
     });
-    sqlite3_exec(db, "COMMIT TRANSACTION", NULL, NULL, NULL);
+    sqlite3_exec(db, "COMMIT TRANSACTION", NULL, 0, &zErrMsg);
+    if(rc != SQLITE_OK) {
+        fprintf(stderr, "SQL error: %s\n", zErrMsg);
+    }
 }
 
 void SqliteDb::insertSuspectedUrls(std::vector<std::string> suspectedUrls)
@@ -141,7 +162,10 @@ void SqliteDb::insertSuspectedUrls(std::vector<std::string> suspectedUrls)
         std::string query = "INSERT INTO suspected_url (domain) VALUES (" + url + ");";
         sqlite3_exec(db, query.c_str(), NULL, NULL, NULL);
     });
-    sqlite3_exec(db, "COMMIT TRANSACTION", NULL, NULL, NULL);
+    sqlite3_exec(db, "COMMIT TRANSACTION", NULL, 0, &zErrMsg);
+    if(rc != SQLITE_OK) {
+        fprintf(stderr, "SQL error: %s\n", zErrMsg);
+    }
 }
 
 void SqliteDb::createCountersTable()

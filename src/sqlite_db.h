@@ -11,6 +11,8 @@
 
 #include "counters.h"
 #include "idatabase.h"
+#include "utils.h"
+
 
 class SqliteDb : public IDatabase
 {
