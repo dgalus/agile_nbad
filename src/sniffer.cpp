@@ -82,5 +82,62 @@ void Sniffer::m_processFrame(char* buffer, int buflen)
     struct ethhdr *eth = (struct ethhdr *)(buffer);
     if((!memcmp(this->blank, eth->h_source, 6)) && (!memcmp(this->blank, eth->h_dest, 6)))
         return;
-    
+    this->counters->countersMutex.lock();
+    this->counters->l2_frames++;
+    this->counters->l2_traffic += buflen;
+    this->counters->countersMutex.unlock();
+
+    if(eth->h_proto == 0x0608)
+    {
+        this->counters->countersMutex.lock();
+        this->counters->l3_frames++;
+        this->counters->l3_traffic += (buflen - sizeof(struct ethhdr));
+        this->counters->arp_frames++;
+        this->counters->countersMutex.unlock();
+        // TODO
+    }
+    else if(eth->h_proto == 0x0008)
+    {
+        this->counters->countersMutex.lock();
+        this->counters->l3_frames++;
+        this->counters->l3_traffic += (buflen - sizeof(struct ethhdr));
+        this->counters->ip_frames++;
+        this->counters->countersMutex.unlock();
+
+        unsigned short iphdrlen;
+        struct iphdr *iph = (struct iphdr*) (buffer + sizeof(struct ethhdr));
+        iphdrlen = iph->ihl * 4;
+
+        // TODO
+        if(iph->protocol == 1)
+        {
+            this->counters->countersMutex.lock();
+            this->counters->l4_frames++;
+            this->counters->l4_traffic += (buflen - sizeof(struct ethhdr) - iphdrlen);
+            this->counters->icmp_frames++;
+            this->counters->countersMutex.unlock();
+
+            // TODO
+        }
+        else if(iph->protocol == 6)
+        {
+            this->counters->countersMutex.lock();
+            this->counters->l4_frames++;
+            this->counters->l4_traffic += (buflen - sizeof(struct ethhdr) - iphdrlen);
+            this->counters->tcp_frames++;
+            this->counters->countersMutex.unlock();
+
+            // TODO
+        }
+        else if(iph->protocol == 17)
+        {
+            this->counters->countersMutex.lock();
+            this->counters->l4_frames++;
+            this->counters->l4_traffic += (buflen - sizeof(struct ethhdr) - iphdrlen);
+            this->counters->udp_frames++;
+            this->counters->countersMutex.unlock();
+
+            // TODO
+        }
+    }
 }
