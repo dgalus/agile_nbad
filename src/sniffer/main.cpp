@@ -10,8 +10,8 @@
 #include "sniffer.h"
 #include "pcap.h"
 
-#include "../libs/rapidjson/rapidjson.h"
-#include "../libs/rapidjson/document.h"
+#include "../../libs/rapidjson/rapidjson.h"
+#include "../../libs/rapidjson/document.h"
 
 void printUsage(char* app)
 {
