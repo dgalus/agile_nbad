@@ -1,5 +1,6 @@
 {
     "interface" : "eth0",
+    "pcap_file_template" : "dump_%Y-%m-%d_%H-%M-%S",
     "database" : "db.sqlite",
     "modules" : [
         { "name" : "counters", "args" : {} },

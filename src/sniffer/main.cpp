@@ -8,6 +8,7 @@
 #include "counters.h"
 #include "db_cache.h"
 #include "sniffer.h"
+#include "pcap.h"
 
 #include "../libs/rapidjson/rapidjson.h"
 #include "../libs/rapidjson/document.h"
@@ -37,6 +38,7 @@ int main(int argc, char* argv[])
 
     std::shared_ptr<Counters> c = std::make_shared<Counters>();
     Sniffer s{config["interface"].GetString(), c};
+    Pcap p{config["pcap_file_template"].GetString()};
 
     return 0;
 }
