@@ -2,7 +2,7 @@
 
 Pcap::Pcap(std::string filename)
 {
-    this->filename = filename;
+    this->filename = formatStringWithDatetime(filename);
     pcap_hdr_t hdr;
     hdr.magic_number = 0xA1B2C3D4;
     hdr.version_major = 0x0002;
@@ -12,7 +12,7 @@ Pcap::Pcap(std::string filename)
     hdr.snaplen = 0x00040000;
     hdr.network = 0x00000001;
 
-    FILE *f = fopen(filename.c_str(), "wb");
+    FILE *f = fopen(this->filename.c_str(), "wb");
     fwrite(&hdr, sizeof(hdr), 1, f);
     fclose(f);
 }

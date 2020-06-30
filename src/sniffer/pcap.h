@@ -18,7 +18,10 @@
 #include <time.h>
 #include <unistd.h>
 
+#include <algorithm>
 #include <string>
+
+#include "algo.h"
 
 typedef struct pcap_hdr_s {
         uint32_t magic_number;
