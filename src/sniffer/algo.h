@@ -6,7 +6,7 @@
 #include <iomanip>
 #include <string>
 
-std::string formatStringWithDatetime(std::string str)
+static std::string formatStringWithDatetime(std::string str)
 {
     std::string input = str;
     std::chrono::system_clock::time_point now = std::chrono::system_clock::now();
