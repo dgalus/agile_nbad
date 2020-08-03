@@ -41,3 +41,5 @@ bin
 src/venv
 env
 venv
+
+src/dump*
