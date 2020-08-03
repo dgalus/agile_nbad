@@ -14,6 +14,7 @@
 
 #include "algo.h"
 
+
 typedef struct pcap_hdr_s {
     uint32_t magic_number;
     uint16_t version_major;
@@ -24,6 +25,7 @@ typedef struct pcap_hdr_s {
     uint32_t network;
 } pcap_hdr_t;
 
+
 typedef struct pcaprec_hdr_s {
     uint32_t ts_sec;
     uint32_t ts_usec;
@@ -31,11 +33,13 @@ typedef struct pcaprec_hdr_s {
     uint32_t orig_len;
 } pcaprec_hdr_t;
 
+
 typedef struct pcap_frame_s {
     pcaprec_hdr_s header;
     uint16_t len;
     void* data;
 } pcap_frame_t;
+
 
 class Pcap
 {

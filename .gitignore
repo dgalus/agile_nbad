@@ -37,3 +37,7 @@
 # my
 bin
 *.pcap
+
+src/venv
+env
+venv

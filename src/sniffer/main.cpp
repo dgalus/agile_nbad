@@ -6,7 +6,6 @@
 #include <thread>
 
 #include "counters.h"
-#include "db_cache.h"
 #include "sniffer.h"
 #include "pcap.h"
 

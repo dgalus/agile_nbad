@@ -26,33 +26,33 @@ IpAddress::IpAddress(uint32_t ipAddress)
 
 IpAddress::IpAddress(const IpAddress& ipAddress)
 {
-    uint32_t ip = ipAddress.to_bytes_be();
+    uint32_t ip = ipAddress.toBytesBe();
     this->octets[0] = ip >> 24;
     this->octets[1] = (ip >> 16) & 0xFF;
     this->octets[2] = (ip >> 8) & 0xFF;
     this->octets[2] = ip & 0xFF;
 }
 
-std::string IpAddress::to_string() const
+std::string IpAddress::toString() const
 {
     return std::to_string(this->octets[0]) + "." + std::to_string(this->octets[1]) + "." + std::to_string(this->octets[2]) + "." + std::to_string(this->octets[3]);
 }
 
-std::string IpAddress::to_hex_string_be() const
+std::string IpAddress::toHexStringBe() const
 {
     std::stringstream ss;
     ss << std::hex << this->octets[0] << std::hex << this->octets[1] << std::hex << this->octets[2] << std::hex << this->octets[3];
     return ss.str();
 }
 
-std::string IpAddress::to_hex_string_le() const
+std::string IpAddress::toHexStringLe() const
 {
     std::stringstream ss;
     ss << std::hex << this->octets[3] << std::hex << this->octets[2] << std::hex << this->octets[1] << std::hex << this->octets[0];
     return ss.str();
 }
 
-uint32_t IpAddress::to_bytes_be() const
+uint32_t IpAddress::toBytesBe() const
 {
     uint32_t ret = this->octets[0];
     ret <<= 8;
@@ -64,7 +64,7 @@ uint32_t IpAddress::to_bytes_be() const
     return ret;
 }
 
-uint32_t IpAddress::to_bytes_le() const
+uint32_t IpAddress::toBytesLe() const
 {
     uint32_t ret = this->octets[3];
     ret <<= 8;

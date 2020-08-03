@@ -25,29 +25,30 @@
 
 #define BUFSIZE 65536
 
+
 class Sniffer {
-    public:
-        Sniffer(const std::string interface, std::shared_ptr<Counters> counters);
-        virtual ~Sniffer();
-        void setEthernetCallback(std::function<void()> func);
-        void setArpCallback(std::function<void()> func);
-        void setTcpCallback(std::function<void()> func);
-        void setUdpCallback(std::function<void()> func);
-        void setIcmpCallback(std::function<void()> func);
-        void sniff();
+public:
+    Sniffer(const std::string interface, std::shared_ptr<Counters> counters);
+    virtual ~Sniffer();
+    void setEthernetCallback(std::function<void()> func);
+    void setArpCallback(std::function<void()> func);
+    void setTcpCallback(std::function<void()> func);
+    void setUdpCallback(std::function<void()> func);
+    void setIcmpCallback(std::function<void()> func);
+    void sniff();
 
-    private:
-        void m_processFrame(char* buffer, int buflen);
-        uint8_t* blank;
+private:
+    void m_processFrame(char* buffer, int buflen);
+    uint8_t* blank;
 
-        std::string interface;
-        std::shared_ptr<Counters> counters;
+    std::string interface;
+    std::shared_ptr<Counters> counters;
 
-        std::function<void()> ethCallback;
-        std::function<void()> arpCallback;
-        std::function<void()> tcpCallback;
-        std::function<void()> udpCallback;
-        std::function<void()> icmpCallback;
+    std::function<void()> ethCallback;
+    std::function<void()> arpCallback;
+    std::function<void()> tcpCallback;
+    std::function<void()> udpCallback;
+    std::function<void()> icmpCallback;
 };
 
 #endif

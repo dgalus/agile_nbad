@@ -6,6 +6,7 @@
 #include <iomanip>
 #include <string>
 
+
 static std::string formatStringWithDatetime(std::string str)
 {
     std::string input = str;

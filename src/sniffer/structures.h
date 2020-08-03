@@ -23,12 +23,14 @@ struct TcpSession {
     std::string remote_geolocation;
 };
 
+
 struct TcpSessionMin {
     IpAddress ip_src;
     IpAddress ip_dst;
     uint16_t src_port;
     uint16_t dst_port;
 };
+
 
 struct TcpSegment {
     std::vector<std::string> flags;
@@ -37,12 +39,14 @@ struct TcpSegment {
     int direction;
 };
 
+
 struct IcmpSegment {
     IpAddress ip_src;
     IpAddress ip_dst;
     uint8_t type;
     std::string timestamp;
 };
+
 
 struct UdpSegment {
     IpAddress ip_src;

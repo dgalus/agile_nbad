@@ -29,10 +29,10 @@ public:
     std::vector<std::string> getSuspectedUrls() override;
 
 private:
-    inline void createCountersTable();
-    inline void createSuspectedIpAddressesTable();
-    inline void createSuspectedDomainsTable();
-    inline void createSuspectedUrlsTable();
+    inline void m_createCountersTable();
+    inline void m_createSuspectedIpAddressesTable();
+    inline void m_createSuspectedDomainsTable();
+    inline void m_createSuspectedUrlsTable();
 
     char *zErrMsg = 0;
     int rc;

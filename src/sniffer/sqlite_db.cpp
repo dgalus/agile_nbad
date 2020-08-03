@@ -16,10 +16,10 @@ SqliteDb::~SqliteDb()
 
 void SqliteDb::createDbSchemaIfNotExists()
 {
-    createCountersTable();
-    createSuspectedDomainsTable();
-    createSuspectedIpAddressesTable();
-    createSuspectedUrlsTable();
+    m_createCountersTable();
+    m_createSuspectedDomainsTable();
+    m_createSuspectedIpAddressesTable();
+    m_createSuspectedUrlsTable();
 }
 
 std::vector<std::string> SqliteDb::getSuspectedDomains()
@@ -168,7 +168,7 @@ void SqliteDb::insertSuspectedUrls(std::vector<std::string> suspectedUrls)
     }
 }
 
-void SqliteDb::createCountersTable()
+void SqliteDb::m_createCountersTable()
 {
     std::string query = "CREATE TABLE counters ("
         "id INTEGER PRIMARY KEY AUTOINCREMENT, "
@@ -197,7 +197,7 @@ void SqliteDb::createCountersTable()
     }
 }
 
-void SqliteDb::createSuspectedIpAddressesTable()
+void SqliteDb::m_createSuspectedIpAddressesTable()
 {
     std::string query = "CREATE TABLE suspected_ip_address ("
         "id INTEGER PRIMARY KEY AUTOINCREMENT, "
@@ -208,7 +208,7 @@ void SqliteDb::createSuspectedIpAddressesTable()
     }
 }
 
-void SqliteDb::createSuspectedDomainsTable()
+void SqliteDb::m_createSuspectedDomainsTable()
 {
     std::string query = "CREATE TABLE suspected_domain ("
         "id INTEGER PRIMARY KEY AUTOINCREMENT, "
@@ -219,7 +219,7 @@ void SqliteDb::createSuspectedDomainsTable()
     }
 }
 
-void SqliteDb::createSuspectedUrlsTable()
+void SqliteDb::m_createSuspectedUrlsTable()
 {
     std::string query = "CREATE TABLE suspected_url ("
         "id INTEGER PRIMARY KEY AUTOINCREMENT, "
