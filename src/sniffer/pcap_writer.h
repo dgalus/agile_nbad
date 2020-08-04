@@ -1,5 +1,5 @@
-#ifndef PCAP_H_
-#define PCAP_H_
+#ifndef PCAP_WRITER_H_
+#define PCAP_WRITER_H_
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -41,10 +41,10 @@ typedef struct pcap_frame_s {
 } pcap_frame_t;
 
 
-class Pcap
+class PcapWriter
 {
 public:
-    Pcap(std::string filename);
+    PcapWriter(std::string filename);
     void insertFrame(void* buffer, uint16_t buflen);
     void loop();
 

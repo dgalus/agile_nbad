@@ -1,6 +1,6 @@
-#include "pcap.h"
+#include "pcap_writer.h"
 
-Pcap::Pcap(std::string filename)
+PcapWriter::PcapWriter(std::string filename)
 {
     pcap_hdr_t hdr;
 
@@ -19,7 +19,7 @@ Pcap::Pcap(std::string filename)
     fclose(f);
 }
 
-void Pcap::insertFrame(void* buffer, uint16_t buflen)
+void PcapWriter::insertFrame(void* buffer, uint16_t buflen)
 {
     pcap_frame_s f;
 
@@ -32,7 +32,7 @@ void Pcap::insertFrame(void* buffer, uint16_t buflen)
     frames_mutex.unlock();
 }
 
-void Pcap::loop()
+void PcapWriter::loop()
 {
     frames_mutex.lock();
     if(this->frames.size() > 300)
@@ -54,7 +54,7 @@ void Pcap::loop()
     frames_mutex.unlock();
 }
 
-void Pcap::m_clearFrames()
+void PcapWriter::m_clearFrames()
 {
     for(
         std::vector<pcap_frame_t>::iterator it = this->frames.begin();
@@ -67,7 +67,7 @@ void Pcap::m_clearFrames()
     this->frames.clear();
 }
 
-pcaprec_hdr_t Pcap::m_getPcapRecHdr(uint16_t buflen)
+pcaprec_hdr_t PcapWriter::m_getPcapRecHdr(uint16_t buflen)
 {
     time_t now;
     pcaprec_hdr_t ph;
