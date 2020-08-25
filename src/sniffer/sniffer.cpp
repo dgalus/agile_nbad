@@ -84,7 +84,6 @@ void Sniffer::sniff()
         this->pw->insertFrame(buffer, buflen);
         this->m_processFrame(buffer, buflen);
     }
-
     free(buffer);
 }
 

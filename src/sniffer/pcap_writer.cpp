@@ -22,14 +22,16 @@ PcapWriter::PcapWriter(std::string filename)
 PcapWriter::~PcapWriter()
 {
     m_loop();
-    m_clearFrames();
 }
 
 void PcapWriter::insertFrame(void* buffer, uint16_t buflen)
 {
     pcap_frame_s f;
 
-    f.data = buffer;
+    void *buf = malloc(buflen);
+    memcpy(buf, buffer, buflen);
+
+    f.data = buf;
     f.len = buflen;
     f.header = this->m_getPcapRecHdr(buflen);
 
@@ -41,22 +43,19 @@ void PcapWriter::insertFrame(void* buffer, uint16_t buflen)
 void PcapWriter::m_loop()
 {
     frames_mutex.lock();
-    if(this->frames.size() > 300)
+    FILE *f = fopen(this->filename.c_str(), "ab+");
+    fseek(f, 0, SEEK_END);
+    for(
+        std::vector<pcap_frame_t>::iterator it = this->frames.begin();
+        it != this->frames.end();
+        it++
+    )
     {
-        FILE *f = fopen(this->filename.c_str(), "ab+");
-        fseek(f, 0, SEEK_END);
-        for(
-            std::vector<pcap_frame_t>::iterator it = this->frames.begin();
-            it != this->frames.end();
-            it++
-            )
-        {
-            fwrite(&(it->header), sizeof(pcaprec_hdr_t), 1, f);
-            fwrite(it->data, it->len, 1, f);
+        fwrite(&(it->header), sizeof(pcaprec_hdr_t), 1, f);
+        fwrite(it->data, it->len, 1, f);
         }
-        fclose(f);
-        this->m_clearFrames();
-    }
+    fclose(f);
+    this->m_clearFrames();
     frames_mutex.unlock();
 }
 
