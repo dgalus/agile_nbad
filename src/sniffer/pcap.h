@@ -4,6 +4,12 @@
 #include <string>
 #include <vector>
 
+#include <string.h>
+#include <stdint.h>
+#include <stdio.h>
+#include <stdlib.h>
+
+#include "utils.h"
 #include "pcap_structuers.h"
 
 
