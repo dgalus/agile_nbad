@@ -19,6 +19,12 @@ PcapWriter::PcapWriter(std::string filename)
     fclose(f);
 }
 
+PcapWriter::~PcapWriter()
+{
+    m_loop();
+    m_clearFrames();
+}
+
 void PcapWriter::insertFrame(void* buffer, uint16_t buflen)
 {
     pcap_frame_s f;
@@ -32,7 +38,7 @@ void PcapWriter::insertFrame(void* buffer, uint16_t buflen)
     frames_mutex.unlock();
 }
 
-void PcapWriter::loop()
+void PcapWriter::m_loop()
 {
     frames_mutex.lock();
     if(this->frames.size() > 300)

@@ -20,10 +20,11 @@ class PcapWriter
 {
 public:
     PcapWriter(std::string filename);
+    virtual ~PcapWriter();
     void insertFrame(void* buffer, uint16_t buflen);
-    void loop();
 
 private:
+    void m_loop();
     void m_clearFrames();
     pcaprec_hdr_t m_getPcapRecHdr(uint16_t buflen);
 

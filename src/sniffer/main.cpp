@@ -36,8 +36,8 @@ int main(int argc, char* argv[])
     getConfig(argv[1], config);
 
     std::shared_ptr<Counters> c = std::make_shared<Counters>();
-    Sniffer s{config["interface"].GetString(), c};
-    Pcap p{config["pcap_file_template"].GetString()};
+    Sniffer s{config["interface"].GetString(), c, config["pcap_file_template"].GetString()};
+    //Pcap p{config["pcap_file_template"].GetString()};
 
     return 0;
 }

@@ -7,6 +7,7 @@
 #include <sstream>
 #include <string>
 
+
 static std::string formatStringWithDatetime(std::string str)
 {
     std::string input = str;
@@ -24,6 +25,13 @@ static std::string getCurrentDatetime(std::string format)
     std::stringstream ss;
     ss << std::put_time(std::localtime(&in_time_t), format.c_str());
     return ss.str();
+}
+
+static uint8_t getCurrentMinute()
+{
+    std::time_t t = std::time(0);
+    std::tm *now = std::localtime(&t);
+    return now->tm_min;
 }
 
 #endif

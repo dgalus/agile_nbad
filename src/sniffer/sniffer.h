@@ -22,33 +22,27 @@
 #include <unistd.h>
 
 #include "counters.h"
+#include "pcap_writer.h"
+#include "utils.h"
 
 #define BUFSIZE 65536
 
 
 class Sniffer {
 public:
-    Sniffer(const std::string interface, std::shared_ptr<Counters> counters);
+    Sniffer(const std::string interface, std::shared_ptr<Counters> counters, std::string filenameTemplate);
     virtual ~Sniffer();
-    void setEthernetCallback(std::function<void()> func);
-    void setArpCallback(std::function<void()> func);
-    void setTcpCallback(std::function<void()> func);
-    void setUdpCallback(std::function<void()> func);
-    void setIcmpCallback(std::function<void()> func);
     void sniff();
 
 private:
     void m_processFrame(char* buffer, int buflen);
     uint8_t* blank;
 
+    std::string filenameTemplate;
     std::string interface;
     std::shared_ptr<Counters> counters;
-
-    std::function<void()> ethCallback;
-    std::function<void()> arpCallback;
-    std::function<void()> tcpCallback;
-    std::function<void()> udpCallback;
-    std::function<void()> icmpCallback;
+    PcapWriter *pw;
+    uint8_t currentMinute;
 };
 
 #endif

@@ -1,17 +1,20 @@
 #include "sniffer.h"
 
-Sniffer::Sniffer(const std::string interface, std::shared_ptr<Counters> counters)
+Sniffer::Sniffer(const std::string interface, std::shared_ptr<Counters> counters, std::string filenameTemplate)
 {
     this->interface = interface;
     this->counters = counters;
-
+    this->filenameTemplate = filenameTemplate;
     this->blank = (uint8_t *) malloc(6);
     memset(blank, 0, 6);
+    this->pw = new PcapWriter(filenameTemplate);
+    this->currentMinute = getCurrentMinute();
 }
 
 Sniffer::~Sniffer()
 {
     free(this->blank);
+    delete this->pw;
 }
 
 void Sniffer::sniff()
@@ -71,6 +74,14 @@ void Sniffer::sniff()
             perror("error in recvfrom()\n");
             continue;
         }
+        uint8_t currMin = getCurrentMinute();
+        if(currMin != this->currentMinute)
+        {
+            this->currentMinute = currMin;
+            delete this->pw;
+            this->pw = new PcapWriter(filenameTemplate);
+        }
+        this->pw->insertFrame(buffer, buflen);
         this->m_processFrame(buffer, buflen);
     }
 
