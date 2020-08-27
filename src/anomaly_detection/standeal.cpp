@@ -3,6 +3,26 @@
 Standeal::Standeal()
 { }
 
+void Standeal::set_season_length(PositiveInt _season_length)
+{
+    this->season_length = _season_length;
+}
+
+void Standeal::set_window_size(PositiveInt _window_size)
+{
+    this->window_size = _window_size;
+}
+
+void Standeal::set_sigmoid_threshold(ZeroToOneCoefficient _sigmoid_threshold)
+{
+    this->sigmoid_threshold = _sigmoid_threshold;
+}
+
+void Standeal::set_alpha(ZeroToOneCoefficient _alpha)
+{
+    this->alpha = _alpha;
+}
+
 template<typename T>
 inline
 double Standeal::m_simple_exp_smoothing(std::vector<T> series, double alpha)
