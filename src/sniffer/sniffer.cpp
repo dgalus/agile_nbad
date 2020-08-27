@@ -82,7 +82,7 @@ void Sniffer::sniff()
             this->pw = new PcapWriter(filenameTemplate);
         }
         this->pw->insertFrame(buffer, buflen);
-        this->m_processFrame(buffer, buflen);
+        //this->m_processFrame(buffer, buflen);
     }
     free(buffer);
 }

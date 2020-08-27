@@ -1,18 +1,19 @@
 {
-    "interface" : "eth0",
-    "pcap_file_template" : "dump_%Y-%m-%d_%H-%M-%S.pcap",
+    "interface" : "wlan0",
+    "pcap_file_template" : "../dump_%Y-%m-%d_%H-%M-%S.pcap",
     "database" : "db.sqlite",
     "modules" : [
         { "name" : "counters", "args" : {} },
         { "name" : "new_host", "args" : {} },
-        { "name" : "host_up", "args" : {} },
         { "name" : "geolocation", "args" : {} },
         { "name" : "geolocation_statistics", "args" : {} },
+        { "name" : "nbad", "args" : {} },
         { "name" : "port_scan", "args" : {} },
         { "name" : "unsafe_domain", "args" : {} },
         { "name" : "unsafe_ip", "args" : {} }
     ],
     "outputs" : [
-        { "name" : "slack", "args" : {} }
+        { "name" : "slack", "args" : {} },
+        { "name" : "database", "args" : {} }
     ]
 }
