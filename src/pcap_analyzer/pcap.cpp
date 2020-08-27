@@ -3,6 +3,14 @@
 Pcap::Pcap()
 { }
 
+Pcap::~Pcap()
+{
+    for(auto it = this->frames.begin(); it != this->frames.end(); it++)
+    {
+        free(it->data);
+    }
+}
+
 Pcap::Pcap(std::string filename)
 {
     this->readPcapFile(filename);
@@ -74,12 +82,12 @@ void Pcap::readPcapFile(std::string filename)
             frame.len = frame.header.orig_len;
 
             void *data = malloc(frame.len);
-            memcpy(data, pos, frame.len);
+            memcpy(data, pos + sizeof(pcaprec_hdr_t), frame.len);
             frame.data = data;
 
             this->frames.push_back(frame);
 
-            pos += frame.len;
+            pos += frame.len + sizeof(pcaprec_hdr_t);
         }
 
         free(buffer);

@@ -3,8 +3,6 @@
 
 #include <limits>
 #include <stdexcept>
-#include <sstream>
-#include <iostream>
 
 template<typename T, T Vmin, T Vmax>
 struct BoundedValue
@@ -15,7 +13,7 @@ struct BoundedValue
 
     BoundedValue(T value)
     {
-        if(value < Vmin || value > Vmax)
+        if (value < Vmin || value > Vmax)
             throw std::range_error(
                 "Value must be greater than or equal to "
                 + std::to_string(Vmin)
@@ -30,7 +28,9 @@ struct BoundedValue
     }
 };
 
-typedef BoundedValue<unsigned int, 0, std::numeric_limits<unsigned int>::max()> PositiveInt;
+typedef BoundedValue
+    <unsigned int, 0, std::numeric_limits<unsigned int>::max()>
+PositiveInt;
 
 struct ZeroToOneCoefficient
 {
@@ -40,7 +40,7 @@ struct ZeroToOneCoefficient
 
 	ZeroToOneCoefficient(double value)
 	{
-		if(value < 0 || value > 1)
+		if (value < 0 || value > 1)
             throw std::range_error(
                 "Value must be greater than or equal to 0"
                 " and less then or equal to 1."
